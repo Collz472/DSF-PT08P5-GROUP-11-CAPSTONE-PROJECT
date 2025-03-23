@@ -29,3 +29,7 @@ A UK based multinational organization (VMagic Leather Processing Factory) is int
 - Apply hypothesis testing, including ANOVA, to compare disorder types across locations.
 - Use predictive modeling techniques like logistic regression to assess conflict probabilities.
 -Conduct trend analysis to visualize conflict patterns over time.
+
+**Dataset Used**
+This project used a data set from https://acleddata.com/about-acled/ a comprehensive repository of real-time data on political violence, protests, and other politically relevant events from around the world. The dataset is extensive with 413,948 rows and 31 features and is collected via a global network that aggregates reports from local, regional, and national media, government publications, and over 50 local data collection partners, covering more than 100 languages and updated on a weekly basis.
+
