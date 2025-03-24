@@ -9,7 +9,7 @@ Africa is highly marketable to multinationals due to its vast natural resources,
 4. Provide actionable recommendations to multinationals on conflicts in Africa in terms of areas prone to conflicts and types of conflict so they can formulate good risk management strategies.
 
 # **Problem Statement**
-A UK based multinational organization (VMagic Leather Processing Factory) is interested in establishing a manufacturing plant in a location that is less prone to conflict and political instability. The organization has hired our data science consulting firm to analyze data for different countries in Africa and come up with a model that can accurately determine conflict hot spots, come up with a risk score, and forecast conflict events.
+A UK based multinational organization (VMagic Leather Processing Factory) is interested in establishing a manufacturing plant in a location that is less prone to conflict and political instability. The organization has hired our data science consulting firm to analyze data for different countries in Africa and come up with a model that can accurately determine conflict hot spots and forecast conflict events.
 
 # **Objectives**
 1. **Conflict Analysis in Africa**: Establish a foundational understanding of conflict types, high-risk regions, and underlying causes by analyzing relevant data.
