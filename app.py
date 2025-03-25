@@ -7,18 +7,18 @@ import sys
 import io
 import folium
 
-# ✅ Force UTF-8 Encoding for Windows
+# Force UTF-8 Encoding for Windows
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 app = Flask(__name__, template_folder="templates")
 
-# 🔹 Get Absolute Paths
+# Getting Absolute Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, "xgboost_model.pkl")
 conflict_data_path = os.path.join(BASE_DIR, "conflict_data.csv")
 
-# ✅ Load trained XGBoost model
+#  Loading the trained XGBoost model
 try:
     with open(model_path, "rb") as file:
         model = pickle.load(file)
@@ -27,7 +27,7 @@ except Exception as e:
     print(f"Error loading model: {e}")
     model = None
 
-# ✅ Load conflict dataset
+#  Loading conflict dataset
 try:
     conflict_data = pd.read_csv(conflict_data_path)
     print("Conflict dataset loaded successfully.")
@@ -35,13 +35,13 @@ except Exception as e:
     print(f"Error loading conflict dataset: {e}")
     conflict_data = None
 
-# 🔹 Precompute average latitude & longitude for each country
+#Precompute average latitude & longitude for each country
 if conflict_data is not None:
     country_avg_coords = conflict_data.groupby("country")[["latitude", "longitude"]].mean().to_dict()
 else:
     country_avg_coords = {}
 
-# 🔹 Define feature names
+#Define feature names
 feature_names = [
     "year", "latitude", "longitude", "log_fatalities", "civilian_targeting_Yes",
     "country_Angola", "country_Benin", "country_Botswana", "country_Burkina Faso", "country_Burundi",
@@ -58,15 +58,15 @@ feature_names = [
     "country_Togo", "country_Tunisia", "country_Uganda", "country_Zambia", "country_Zimbabwe", "country_eSwatini"
 ]
 
-# 🛠 Preprocess User Input
+#Preprocessing User Input
 def preprocess_input(country):
     """Creates a one-hot encoded dataframe with the exact features the model was trained on."""
     input_data = pd.DataFrame(0, index=[0], columns=feature_names)
-    input_data["year"] = 2025  # Default prediction year
+    input_data["year"] = 2025  
     input_data["latitude"] = country_avg_coords["latitude"].get(country, 0)
     input_data["longitude"] = country_avg_coords["longitude"].get(country, 0)
 
-    # One-hot encode country
+    # performing One-hot encode for country
     country_col = f"country_{country}"
     if country_col in input_data.columns:
         input_data[country_col] = 1
@@ -75,21 +75,21 @@ def preprocess_input(country):
 
     return input_data
 
-# 1️⃣ Calculate Probability of Conflict for the last 3-5 years (Recent Period)
+#Calculate Probability of Conflict for the last 3-5 years (Recent Period)
 def calculate_recent_probability(country):
     # Filter the conflict data for the period 2020-2025 (or adjust for the last 3-5 years)
     recent_data = conflict_data[(conflict_data['country'] == country) & (conflict_data['year'] >= 2020)]
     
     # If there's no conflict data in the recent period, return a default (low) probability
     if recent_data.empty:
-        return 5.3  # Default low probability for lack of data
+        return 5.3  
     
     # Calculate the total number of conflicts and fatalities in this period
     total_conflicts = len(recent_data)
     total_fatalities = recent_data['fatalities'].sum()
     
     # Let's assume the probability of conflict is based on the frequency of conflicts
-    probability = (total_conflicts / len(conflict_data[conflict_data['country'] == country])) * 100  # Rough approximation
+    probability = (total_conflicts / len(conflict_data[conflict_data['country'] == country])) * 100  
     return round(probability, 1)
 
 def classify_conflict_state(probability):
@@ -103,12 +103,15 @@ def classify_conflict_state(probability):
 # Function to create Folium map
 def create_map(selected_country, conflict_probability):
     # Define risk colors based on probability
+    # High-risk
     if conflict_probability >= 75:
-        country_color = "red"  # High-risk
+        country_color = "red"  
+    # Medium-risk
     elif 40 <= conflict_probability < 75:
-        country_color = "blue"  # Medium-risk
+        country_color = "blue"  
     else:
-        country_color = "green"  # Stablef
+         # Stablef
+        country_color = "green" 
 
     # Get country coordinates from precomputed averages
     lat = country_avg_coords["latitude"].get(selected_country, 0)
@@ -127,13 +130,11 @@ def create_map(selected_country, conflict_probability):
 
     return folium_map
 
-
-
-# 🏠 Homepage Route
+# Homepage Route
 @app.route("/", methods=["GET", "HEAD"])
 def home():
     if request.method == "HEAD":
-        return "", 200  # Health check
+        return "", 200  
     
     if conflict_data is None:
         return "Error: Conflict dataset failed to load", 500
@@ -142,15 +143,13 @@ def home():
     return render_template("index.html", countries=countries)
 
 
-
-
 # Safe countries list
 safe_countries = [
     'Saint Helena, Ascension and Tristan da Cunha', 'Seychelles', 'Mauritius', 'Mayotte', 
     'Reunion', 'Sao Tome and Principe', 'Comoros', 'Cape Verde'
 ]
 
-# 🚀 Prediction Route
+# Prediction Route
 @app.route("/predict", methods=["POST"])
 def predict():
     try:
@@ -159,7 +158,7 @@ def predict():
         if conflict_data is None:
             raise ValueError("Conflict dataset is not loaded correctly.")
 
-        # 1️⃣ Get User Input
+        # Get User Input
         country = request.form.get("country", "").strip()
         if not country:
             raise ValueError("Country is missing from the input form!")
@@ -183,33 +182,33 @@ def predict():
                                    event_type="No significant conflicts recorded", 
                                    summary=conflict_summary, map_html="")
 
-        # 2️⃣ Preprocess Input for non-safe countries
+        #Preprocess Input for non-safe countries
         input_data = preprocess_input(country)
         if input_data.isnull().values.any():
             raise ValueError(f"Input data contains NaN values: \n{input_data}")
 
         print("Processed Input Data:\n", input_data)
 
-        # 3️⃣ Make Prediction
+        #Make Prediction
         try:
             probability = round(model.predict_proba(input_data)[0][1] * 100, 1)
         except Exception as pred_error:
             raise ValueError(f"Model prediction error: {pred_error}")
 
-        # 4️⃣ Retrieve Recent Conflict Data (2020-2025 or Last 3-5 Years)
+        #Retrieve Recent Conflict Data (2020-2025 or Last 3-5 Years)
         recent_probability = calculate_recent_probability(country)
         
-        # 5️⃣ Classify Conflict State based on Recent Probability
+        #Classify Conflict State based on Recent Probability
         risk_level, trend, investment_advice = classify_conflict_state(recent_probability)
 
-        # 6️⃣ Retrieve Past Conflict Data
+        #Retrieve Past Conflict Data
         region_conflicts = conflict_data[conflict_data["country"] == country]
         print(f"Found {len(region_conflicts)} past conflict records.")
 
         if not region_conflicts.empty:
             most_common_event = region_conflicts["event_type"].mode()[0] if "event_type" in region_conflicts else "Unknown Conflict"
 
-            # 🔹 Find the three years with the highest fatalities
+            #Find the three years with the highest fatalities
             top_fatal_years = (
                 region_conflicts.groupby("year")["fatalities"]
                 .sum()
@@ -219,7 +218,7 @@ def predict():
             past_years = ", ".join(map(str, top_fatal_years["year"].tolist()))
             total_fatalities = top_fatal_years["fatalities"].sum()
 
-            # 🔹 Generate Conflict Summary
+            #Generate Conflict Summary
             conflict_summary = (
                 f"The conflict in {country} was classified as {most_common_event.lower()}. "
                 f"The three most severe years were {past_years}, with a total of {total_fatalities} fatalities. "
@@ -232,17 +231,17 @@ def predict():
             conflict_summary = f"{country} has no significant recorded conflict history. It is considered a relatively stable investment location."
             most_common_event = "No past conflicts recorded"
 
-        # ✅ Create Folium Map for the selected country
+        #Create Folium Map for the selected country
         folium_map = create_map(country, recent_probability)
         map_html = folium_map._repr_html_()
 
-        # ✅ Render the result page with the map
+        #Render the result page with the map
         return render_template("result.html", risk=risk_level, probability=recent_probability, event_type=most_common_event, summary=conflict_summary, map_html=map_html)
 
     except Exception as e:
         print(f"ERROR in predict(): {str(e)}")
         return render_template("error.html", error_message=str(e))
 
-# 🎯 Run Flask App
+#Run Flask App
 if __name__ == "__main__":
     app.run(debug=True)
