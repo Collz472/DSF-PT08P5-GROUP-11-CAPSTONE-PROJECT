@@ -16,7 +16,7 @@ app = Flask(__name__, template_folder="templates")
 # 🔹 Get Absolute Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(BASE_DIR, "xgboost_model.pkl")
-conflict_data_path = os.path.join(BASE_DIR, "Data", "conflict_data.csv")
+conflict_data_path = os.path.join(BASE_DIR, "conflict_data.csv")
 
 # ✅ Load trained XGBoost model
 try:
