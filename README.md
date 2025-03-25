@@ -124,3 +124,7 @@ Class 1 Recall: 89% XGBoost has the highest accuracy and F1-score, meaning it pe
 # Best Model Recommendation
 
 **XGBoost** is the best model to choose because it achieved the highest accuracy of **84.06%**– Outperforming the other models.The best **recall** for conflict cases was 89% – which will ensure high detection of conflict-prone areas and also attained a good balance between **precision and recall** hence minimizing false positives and false negatives.
+
+# Deployment Link
+The Africa conflict prediction system was deployed in render to access the prediction service follow the link below:
+>>>> 🔗[Web_app link](https://dsf-pt08p5-group-11-capstone-project-1.onrender.com)
