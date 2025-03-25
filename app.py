@@ -130,10 +130,14 @@ def create_map(selected_country, conflict_probability):
 
 
 # 🏠 Homepage Route
-@app.route("/")
+@app.route("/", methods=["GET", "HEAD"])
 def home():
+    if request.method == "HEAD":
+        return "", 200  # Respond with empty body but status 200 for health checks
+    
     countries = conflict_data["country"].unique()  # Get the list of unique countries
     return render_template("index.html", countries=countries)
+
 
 
 # Safe countries list
