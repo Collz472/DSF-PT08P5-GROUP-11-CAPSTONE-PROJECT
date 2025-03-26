@@ -2,7 +2,7 @@
 ![Conflict](Images/Conflict_Image.png)
 
 # **BUSINESS UNDERSTANDING**
-Africa is highly marketable to multinationals due to its vast natural resources, growing consumer market, and expanding economic opportunities. However conflict and Political instability can lead to supply chain disruptions, regulatory hurdles, and heightened security expenses, making it difficult for businesses to operate efficiently. Using a structured data driven approach, this project used a data set from https://acleddata.com/about-acled/ to;
+Africa is highly marketable to multinationals due to its vast natural resources, growing consumer market, and expanding economic opportunities. However conflict and Political instability can lead to supply chain disruptions, regulatory hurdles, and heightened security expenses, making it difficult for businesses to operate efficiently. Using a structured data driven approach, this project used the data set to;
 1. Investigate insights on key risk factors causing the conflict, event forecasting, conflict risk score, and risk classification.
 2. Analyze the data set to identify conflict prone areas, forecast conflict areas, establish conflict score for countries, risk classification for different countries.
 3. Perform statistical tests to understand which areas are prone to conflict, their risk scores, forecast areas in future likely to experience conflict and classify different types of conflict.
@@ -12,23 +12,12 @@ Africa is highly marketable to multinationals due to its vast natural resources,
 A UK based multinational organization (VMagic Leather Processing Factory) is interested in establishing a manufacturing plant in a location that is less prone to conflict and political instability. The organization has hired our data science consulting firm to analyze data for different countries in Africa and come up with a model that can accurately determine conflict hot spots and forecast conflict events.
 
 # **Objectives**
-1. **Conflict Analysis in Africa**: Establish a foundational understanding of conflict types, high-risk regions, and underlying causes by analyzing relevant data.
-   
-2. **Dataset Exploration**: Gain familiarity with the dataset’s structure, terminology, and quality by examining key variables, including numerical and categorical data.
+1)	Conduct a comprehensive conflict analysis in Africa by establishing a foundational understanding of conflict types, high-risk regions, and underlying causes 
+2)	Explore the dataset to gain familiarity with its structure, terminology, and quality by examining key variables, including numerical and categorical data.
+3)	Provide business insights for a multinational client to help identify conflict-free locations for a manufacturing facility by developing a predictive model to forecast conflict occurrences based on historical data
+4)	Perform statistical and exploratory data analysis that includes correlation analysis, hypothesis testing, predictive modelling, and descriptive and exploratory analysis utilizing statistical measures
+5)	Map and identify high-risk nations and areas to enhance early warning systems through geographic risk assessments. 
 
-3. **Business Insights for Site Selection**: Assist a multinational client in identifying conflict-free locations for a manufacturing facility by:
-- Developing a predictive model to forecast conflict occurrences based on historical data and socio-political factors.
-- Identifying key conflict drivers through correlation analysis of variables such as fatalities, disorder types, and actor involvement.
-- Assessing spatial and temporal trends to understand conflict variations across regions and time periods.
-- Evaluating conflict severity by predicting the likelihood of high-fatality events.
-- Enhancing early warning systems through geographic risk assessments.
-  
-4. **Statistical and Predictive Analysis**
-- Conduct descriptive and exploratory analysis using measures such as mean, median, variance, and frequency distribution.
-- Perform correlation analysis to examine relationships between key variables.
-- Apply hypothesis testing, including ANOVA, to compare disorder types across locations.
-- Use predictive modeling techniques like logistic regression to assess conflict probabilities.
--Conduct trend analysis to visualize conflict patterns over time.
 
 **Dataset Used**
 
@@ -42,7 +31,7 @@ The Python Libraries used were; Pandas, Numpy, seaborn, matplotlib, sklearn.mode
 # Exploratory Data Analysis (EDA)
 
 **Univariate Analysis - a. Interpretation of Numerical Variable Distributions**
-The image below indicates that the **latitude distribution** shows clustering around specific values, indicating conflicts are concentrated  latitudes of between 5°N and 15°S) strongly representing countries within the Eastern, Western and Middle Africa regions. The high conectration in the eastern region is possibly due to ongoing conflicts, political instability, and social unrest in countries like Somalia, Nigeria, DRC, sudan, Kenya, Ethiopia and south sudan. The **longitude distribution** has multiple peaks, with the highest peak falling between 30°E and 50°E suggesting conflicts occur in distinct regions rather than being uniformly distributed. This reinforces the idea of localized conflict zones which occur towards the eastern part of the continent attributed to high conflucts in countries like Somalia.The **geo_precision distribution** shows most events have high location accuracy (1), but some have lower precision (2,3), indicating location uncertainty in certain records.The **fatalities distribution** is highly skewed, with most events having low fatalities and a few extreme cases. The log transformation compresses the scale, reducing the impact of extreme values while maintaining the trend.
+The image below indicates that the **latitude distribution** is clustered around specific values, indicating conflicts are concentrated in certain regions rather than evenly spread. Some extreme values suggest conflicts occur across a broad range. The peak of the distribution lies North of the equtor suggesting most of the conflicts occur in the northern part of the equator. The **longitude distribution** has multiple peaks, with the highest peak falling between 30°E and 50°E suggesting conflicts occur in distinct regions rather than being uniformly distributed. This reinforces the idea of localized conflict zones which occur towards the eastern part of the continent attributed to high conflucts in countries like Somalia.The **geo_precision distribution** shows most events have high location accuracy (1), but some have lower precision (2,3), indicating location uncertainty in certain records.The **fatalities distribution** is highly skewed, with most events having low fatalities and a few extreme cases. The log transformation compresses the scale, reducing the impact of extreme values while maintaining the trend.
 
 ![Numerical distribution](Images/Numerical_Variable_distribution.png)
 
