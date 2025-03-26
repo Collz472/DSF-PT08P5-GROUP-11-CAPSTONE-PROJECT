@@ -41,9 +41,11 @@ The image below indicates that Political violence is the most dominant Disorder 
 ![Categorical distribution](Images/Distribution_of_Event_Characteristics.png)
 
 **Univariate Analysis - c. Geographic distribution** 
-The Eastern Africa Region has the highest number of conflict events, followed by Northern and Western Africa while Somalia and Nigeria are the most affected, with ongoing insurgencies and civil unrest.
+The Eastern Africa Region had the highest number of conflict events, followed by Northern and Western Africa while Nigeria, Sudan and Somalia had the highest fatalities with ongoing insurgencies and civil unrest. In terms of trends, 2024 had the highest number of fatalties followed by 2023 which is attributed to the ongoing disruptions in DRC.
 
-![Geographic distribution](Images/Fatalities_by_country.png)
+![Geographic Severity Map](Images/Conflict_severity_mapping_by_country.png)
+
+![Conflict Trends](Images/Conflict_trends_over_time.png)
 
 **Bivariate Analysis**
 
